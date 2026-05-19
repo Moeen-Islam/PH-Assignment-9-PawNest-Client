@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(email) {
+      return isSignedIn() && request.auth.token.email == email;
+    }
+    
+    function isValidPet(data) {
+      return data.name is string && data.name.size() > 0 &&
+             data.species is string &&
+             data.status in ['available', 'adopted'];
+    }
+
+    // Users
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Pets
+    match /pets/{petId} {
+      allow read: if true; // Publicly browsable
+      allow create: if isSignedIn() || request.resource.data.ownerEmail == "system@pawnest.org";
+      allow update: if isSignedIn() && (
+        isOwner(resource.data.ownerEmail) || 
+        isOwner(request.resource.data.ownerEmail)
+      );
+      allow delete: if isSignedIn() && isOwner(resource.data.ownerEmail);
+    }
+
+    // Requests
+    match /requests/{requestId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.requesterEmail) || 
+        isOwner(resource.data.ownerEmail)
+      );
+      allow create: if isSignedIn() && !isOwner(request.resource.data.ownerEmail); // Owners can't adopt their own
+      allow update: if isSignedIn() && (
+        isOwner(resource.data.ownerEmail) // Owner can approve/reject
+      );
+      allow delete: if isSignedIn() && isOwner(resource.data.requesterEmail); // Requester can cancel
+    }
+  }
+}
