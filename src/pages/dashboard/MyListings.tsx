@@ -31,9 +31,9 @@ export default function MyListings() {
     try {
       const res = await fetch(
         `http://localhost:5000/api/pets?ownerEmail=${encodeURIComponent(
-          user?.email || ""
+          user?.email || "",
         )}`,
-        { credentials: "include" }
+        { credentials: "include" },
       );
 
       const data = await res.json();
@@ -72,7 +72,7 @@ export default function MyListings() {
     try {
       const res = await fetch(
         `http://localhost:5000/api/requests?petId=${pet._id}`,
-        { credentials: "include" }
+        { credentials: "include" },
       );
 
       const data = await res.json();
@@ -85,18 +85,21 @@ export default function MyListings() {
 
   const handleRequestAction = async (
     requestId: string,
-    action: "approved" | "rejected"
+    action: "approved" | "rejected",
   ) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/requests/${requestId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          status: action,
-          petId: selectedPet._id,
-        }),
-      });
+      const res = await fetch(
+        `http://localhost:5000/api/requests/${requestId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            status: action,
+            petId: selectedPet._id,
+          }),
+        },
+      );
 
       if (!res.ok) {
         toast.error("Operation failed");
@@ -167,7 +170,9 @@ export default function MyListings() {
                   </div>
 
                   <div className="text-right">
-                    <p className="font-bold text-orange-500">৳{pet.adoptionFee}</p>
+                    <p className="font-bold text-orange-500">
+                      ৳{pet.adoptionFee}
+                    </p>
                     <p className="text-xs text-slate-500">
                       {pet.requestCount || 0} requests
                     </p>
@@ -222,13 +227,17 @@ export default function MyListings() {
 
       {showRequestsModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/10 bg-card-dark p-8">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold">
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/10 bg-card-dark p-6 md:p-8">
+            {/* Header */}
+            <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+              <h2 className="text-2xl font-bold text-white">
                 Requests for {selectedPet?.name}
               </h2>
-              <button onClick={() => setShowRequestsModal(false)}>
-                <X />
+              <button
+                onClick={() => setShowRequestsModal(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                ✕
               </button>
             </div>
 
@@ -237,42 +246,67 @@ export default function MyListings() {
                 {requests.map((req) => (
                   <div
                     key={req._id}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-5"
+                    className="flex flex-col md:flex-row md:justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
                   >
-                    <p className="font-bold">{req.userName}</p>
-                    <p className="text-sm text-slate-400">{req.userEmail}</p>
-                    <p className="mt-2 text-sm text-brand">
-                      Pickup: {req.pickupDate}
-                    </p>
-                    <p className="mt-2 text-sm italic text-slate-400">
-                      "{req.message}"
-                    </p>
-
-                    {req.status === "pending" ? (
-                      <div className="mt-4 flex gap-2">
-                        <button
-                          onClick={() => handleRequestAction(req._id, "approved")}
-                          className="rounded-lg bg-green-500 px-4 py-2 text-xs font-bold text-white"
-                        >
-                          Approve
-                        </button>
-                        <button
-                          onClick={() => handleRequestAction(req._id, "rejected")}
-                          className="rounded-lg bg-red-500 px-4 py-2 text-xs font-bold text-white"
-                        >
-                          Reject
-                        </button>
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={req.petImageUrl}
+                        alt={req.petName}
+                        className="w-20 h-20 rounded-xl object-cover border border-white/10"
+                      />
+                      <div>
+                        <h3 className="text-lg font-bold text-white">
+                          {req.userName}
+                        </h3>
+                        <p className="text-sm text-gray-400">{req.userEmail}</p>
+                        <p className="text-sm text-gray-400">
+                          Pickup: {req.pickupDate}
+                        </p>
+                        <p className="text-sm italic text-gray-400 mt-1">
+                          "{req.message}"
+                        </p>
                       </div>
-                    ) : (
-                      <p className="mt-4 text-sm font-bold capitalize text-orange-400">
+                    </div>
+
+                    <div className="flex flex-col items-end gap-2 mt-4 md:mt-0">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-bold uppercase flex items-center gap-1 ${
+                          req.status === "approved"
+                            ? "bg-green-500/10 text-green-500"
+                            : req.status === "rejected"
+                              ? "bg-red-500/10 text-red-500"
+                              : "bg-yellow-400/10 text-yellow-400"
+                        }`}
+                      >
                         {req.status}
-                      </p>
-                    )}
+                      </span>
+
+                      {req.status === "pending" && (
+                        <div className="flex gap-2 mt-2">
+                          <button
+                            onClick={() =>
+                              handleRequestAction(req._id, "approved")
+                            }
+                            className="rounded-xl bg-green-500 px-4 py-2 text-xs font-bold text-black hover:bg-green-600 transition"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleRequestAction(req._id, "rejected")
+                            }
+                            className="rounded-xl bg-red-500 px-4 py-2 text-xs font-bold text-black hover:bg-red-600 transition"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="py-10 text-center text-slate-500">
+              <p className="py-10 text-center text-gray-500">
                 No requests for this pet yet.
               </p>
             )}

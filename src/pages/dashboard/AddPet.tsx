@@ -107,13 +107,13 @@ export default function AddPet() {
               onChange={(e) =>
                 setFormData({ ...formData, species: e.target.value })
               }
-              className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none transition-colors focus:border-brand"
+              className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none text-white appearance-none transition-colors focus:border-brand"
             >
-              <option value="Dog">Dog</option>
-              <option value="Cat">Cat</option>
-              <option value="Bird">Bird</option>
-              <option value="Rabbit">Rabbit</option>
-              <option value="Other">Other</option>
+              <option className="bg-card-dark text-white" value="Dog">Dog</option>
+              <option className="bg-card-dark text-white" value="Cat">Cat</option>
+              <option className="bg-card-dark text-white" value="Bird">Bird</option>
+              <option className="bg-card-dark text-white" value="Rabbit">Rabbit</option>
+              <option className="bg-card-dark text-white" value="Other">Other</option>
             </select>
           </div>
 
@@ -158,10 +158,10 @@ export default function AddPet() {
                 onChange={(e) =>
                   setFormData({ ...formData, gender: e.target.value })
                 }
-                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none transition-colors focus:border-brand"
+                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none text-white appearance-none transition-colors focus:border-brand"
               >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option className="bg-card-dark text-white" value="Male">Male</option>
+                <option className="bg-card-dark text-white" value="Female">Female</option>
               </select>
             </div>
           </div>
