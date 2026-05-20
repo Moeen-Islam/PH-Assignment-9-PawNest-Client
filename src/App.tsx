@@ -18,13 +18,16 @@ import MyRequests from "@/src/pages/dashboard/MyRequests";
 import AddPet from "@/src/pages/dashboard/AddPet";
 import MyListings from "@/src/pages/dashboard/MyListings";
 import UpdatePet from "@/src/pages/dashboard/UpdatePet";
-import NotFound from "@/src/pages/NotFound"
-
-
+import NotFound from "@/src/pages/NotFound";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="h-screen flex items-center justify-center bg-bg-dark text-white">Loading...</div>;
+  if (loading)
+    return (
+      <div className="h-screen flex items-center justify-center bg-bg-dark text-white">
+        Loading...
+      </div>
+    );
   return user ? <>{children}</> : <Navigate to="/login" />;
 }
 
@@ -35,28 +38,42 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<MainLayout />}>
-              
               <Route path="/" element={<Home />} />
               <Route path="/pets" element={<AllPets />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              
-              <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
+
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <DashboardLayout />
+                  </PrivateRoute>
+                }
+              >
                 <Route path="my-requests" element={<MyRequests />} />
                 <Route path="add-pet" element={<AddPet />} />
                 <Route path="my-listings" element={<MyListings />} />
                 <Route path="update-pet/:id" element={<UpdatePet />} />
               </Route>
 
-              <Route path="/pets/:id" element={<PetDetails />} />
-              
+              <Route
+                path="/pets/:id"
+                element={
+                  <PrivateRoute>
+                    <PetDetails />
+                  </PrivateRoute>
+                }
+              />
+
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
-          <Toaster 
+          <Toaster
             position="bottom-right"
             toastOptions={{
-              className: 'dark:bg-card-dark dark:text-white dark:border dark:border-white/10',
+              className:
+                "dark:bg-card-dark dark:text-white dark:border dark:border-white/10",
             }}
           />
         </BrowserRouter>
