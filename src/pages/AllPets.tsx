@@ -39,7 +39,7 @@ export default function AllPets() {
       params.append("sortOrder", sortOrder);
 
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/pets?${params.toString()}`,
+        `${(import.meta as any).env.VITE_API_URL}/api/pets?${params.toString()}`,
         { credentials: "include" },
       );
 
@@ -69,7 +69,7 @@ export default function AllPets() {
     <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-4xl font-bold text-white">
             Discover Your <span className="text-brand">New Companion</span>
           </h1>
 
@@ -80,7 +80,7 @@ export default function AllPets() {
               placeholder="Search by name or breed..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-2xl border border-white/10 bg-card-dark py-4 pl-12 pr-4 text-sm transition-colors focus:border-brand focus:outline-none"
+              className="w-full rounded-2xl border border-white/10 bg-[#0B1324] py-4 pl-12 pr-4 text-sm text-white transition-colors focus:border-brand focus:outline-none"
             />
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function AllPets() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="rounded-xl border border-white/10 bg-card-dark px-3 py-2 text-xs font-bold focus:outline-none"
+              className="rounded-xl border border-white/10 bg-[#0B1324] px-3 py-2 text-xs font-bold text-white focus:outline-none"
             >
               <option value="name">Name</option>
               <option value="adoptionFee">Price</option>
@@ -125,7 +125,7 @@ export default function AllPets() {
               onClick={() =>
                 setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
               }
-              className="rounded-xl border border-white/10 bg-white/5 p-2 transition-colors hover:bg-white/10"
+              className="rounded-xl border border-white/10 bg-white/5 p-2 text-white transition-colors hover:bg-white/10"
             >
               <ChevronDown
                 className={cn(
@@ -137,14 +137,18 @@ export default function AllPets() {
           </div>
         </div>
 
+        {/* Dynamic Loading State Spinner Wrapper */}
         {loading ? (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div
-                key={i}
-                className="h-80 animate-pulse rounded-2xl bg-white/5"
-              />
-            ))}
+          <div className="flex flex-col items-center justify-center py-32 space-y-4 w-full">
+            <div className="relative h-12 w-12">
+              {/* Outer decorative ring */}
+              <div className="absolute inset-0 rounded-full border-4 border-brand/20"></div>
+              {/* Spinning core matching brand accents */}
+              <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-brand"></div>
+            </div>
+            <p className="text-sm font-medium text-slate-400 animate-pulse">
+              Retrieving listings from cluster...
+            </p>
           </div>
         ) : pets.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -215,7 +219,7 @@ export default function AllPets() {
         ) : (
           <div className="rounded-3xl border border-dashed border-white/10 py-24 text-center">
             <Filter className="mx-auto mb-4 h-12 w-12 text-gray-700" />
-            <h3 className="mb-2 text-xl font-bold">No pets found</h3>
+            <h3 className="mb-2 text-xl font-bold text-white">No pets found</h3>
             <p className="text-gray-500">
               Try adjusting your filters or search term.
             </p>

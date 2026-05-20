@@ -112,51 +112,53 @@ export default function Home() {
 
       {/* Featured Pets */}
       <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 flex items-end justify-between">
-          <div className="space-y-4">
-            <h2 className="font-display text-4xl font-bold">Featured Pets</h2>
-            <div className="h-1 w-20 rounded-full bg-brand" />
-          </div>
+  <div className="mb-12 flex items-end justify-between">
+    <div className="space-y-4">
+      <h2 className="font-display text-4xl font-bold text-white">Featured Pets</h2>
+      <div className="h-1 w-20 rounded-full bg-brand" />
+    </div>
 
-          <Link
-            to="/pets"
-            className="flex items-center gap-2 text-sm font-bold text-brand hover:underline"
-          >
-            View All <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+    <Link
+      to="/pets"
+      className="flex items-center gap-2 text-sm font-bold text-brand hover:underline"
+    >
+      View All <ArrowRight className="h-4 w-4" />
+    </Link>
+  </div>
 
-        {loading ? (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div
-                key={i}
-                className="h-96 animate-pulse rounded-2xl bg-white/5"
-              />
-            ))}
-          </div>
-        ) : pets.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {pets.map((pet) => (
-              <PetCard key={pet._id || pet.id} pet={pet} />
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-3xl border-2 border-dashed border-white/5 py-20 text-center">
-            <Sparkles className="mx-auto mb-4 h-12 w-12 text-gray-700" />
-            <p className="text-gray-500">
-              No pets listed yet. Be the first to add one!
-            </p>
+  
+  {loading ? (
+    <div className="flex flex-col items-center justify-center py-24 space-y-4 w-full">
+      <div className="relative h-12 w-12">
+        <div className="absolute inset-0 rounded-full border-4 border-brand/20"></div>
+        <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-brand"></div>
+      </div>
+      <p className="text-sm font-medium text-slate-400 animate-pulse">
+        Loading featured animals...
+      </p>
+    </div>
+  ) : pets.length > 0 ? (
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {pets.map((pet) => (
+        <PetCard key={pet._id || pet.id} pet={pet} />
+      ))}
+    </div>
+  ) : (
+    <div className="rounded-3xl border-2 border-dashed border-white/5 py-20 text-center">
+      <Sparkles className="mx-auto mb-4 h-12 w-12 text-gray-700" />
+      <p className="text-gray-500">
+        No pets listed yet. Be the first to add one!
+      </p>
 
-            <Link
-              to="/dashboard/add-pet"
-              className="mt-4 inline-block font-bold text-brand"
-            >
-              Add a listing
-            </Link>
-          </div>
-        )}
-      </section>
+      <Link
+        to="/dashboard/add-pet"
+        className="mt-4 inline-block font-bold text-brand"
+      >
+        Add a listing
+      </Link>
+    </div>
+  )}
+</section>
 
       {/* Static Home Sections */}
       <HomeStaticSections />

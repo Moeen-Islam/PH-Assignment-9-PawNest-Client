@@ -70,7 +70,7 @@ export default function App() {
             </Route>
           </Routes>
           <Toaster
-            position="bottom-right"
+            position="top-right"
             toastOptions={{
               className:
                 "dark:bg-card-dark dark:text-white dark:border dark:border-white/10",
