@@ -39,10 +39,12 @@ export default function UpdatePet() {
       if (!id || !user?.email) return;
 
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/pets/${id}`, {
-          credentials: "include",
-        });
-
+        const res = await fetch(
+          `${(import.meta as any).env.VITE_API_URL}/api/pets/${id}`,
+          {
+            credentials: "include",
+          },
+        );
         if (!res.ok) {
           toast.error("Pet not found");
           navigate("/dashboard/my-listings");
@@ -88,18 +90,21 @@ export default function UpdatePet() {
     setIsLoading(true);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/pets/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${(import.meta as any).env.VITE_API_URL}/api/pets/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            ...formData,
+            age: Number(formData.age),
+            adoptionFee: Number(formData.adoptionFee),
+          }),
         },
-        credentials: "include",
-        body: JSON.stringify({
-          ...formData,
-          age: Number(formData.age),
-          adoptionFee: Number(formData.adoptionFee),
-        }),
-      });
+      );
 
       const data = await res.json();
 
@@ -137,7 +142,11 @@ export default function UpdatePet() {
 
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <Input label="Pet Name" value={formData.name} onChange={(value) => setFormData({ ...formData, name: value })} />
+          <Input
+            label="Pet Name"
+            value={formData.name}
+            onChange={(value) => setFormData({ ...formData, name: value })}
+          />
 
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase tracking-widest text-gray-500">
@@ -145,7 +154,9 @@ export default function UpdatePet() {
             </label>
             <select
               value={formData.species}
-              onChange={(e) => setFormData({ ...formData, species: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, species: e.target.value })
+              }
               className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none transition-colors focus:border-brand"
             >
               <option value="Dog">Dog</option>
@@ -156,7 +167,11 @@ export default function UpdatePet() {
             </select>
           </div>
 
-          <Input label="Breed" value={formData.breed} onChange={(value) => setFormData({ ...formData, breed: value })} />
+          <Input
+            label="Breed"
+            value={formData.breed}
+            onChange={(value) => setFormData({ ...formData, breed: value })}
+          />
 
           <div className="grid grid-cols-2 gap-4">
             <Input
@@ -172,7 +187,9 @@ export default function UpdatePet() {
               </label>
               <select
                 value={formData.gender}
-                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, gender: e.target.value })
+                }
                 className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none transition-colors focus:border-brand"
               >
                 <option value="Male">Male</option>
@@ -205,14 +222,18 @@ export default function UpdatePet() {
             icon={<Tag className="h-3 w-3" />}
             type="number"
             value={formData.adoptionFee}
-            onChange={(value) => setFormData({ ...formData, adoptionFee: value })}
+            onChange={(value) =>
+              setFormData({ ...formData, adoptionFee: value })
+            }
           />
 
           <Input
             label="Health Status"
             icon={<Dumbbell className="h-3 w-3" />}
             value={formData.healthStatus}
-            onChange={(value) => setFormData({ ...formData, healthStatus: value })}
+            onChange={(value) =>
+              setFormData({ ...formData, healthStatus: value })
+            }
           />
 
           <Input

@@ -27,8 +27,8 @@ export default function MyRequests() {
   const fetchRequests = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/requests?email=${user?.email}`,
-        { credentials: "include" }
+        `${(import.meta as any).env.VITE_API_URL}/api/requests?email=${user?.email}`,
+        { credentials: "include" },
       );
 
       const data = await res.json();
@@ -47,10 +47,11 @@ export default function MyRequests() {
   };
 
   const cancelRequest = async (id: string) => {
-    if (!confirm("Are you sure you want to cancel this adoption request?")) return;
+    if (!confirm("Are you sure you want to cancel this adoption request?"))
+      return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/requests/${id}`, {
+      const res = await fetch(`${(import.meta as any).env.VITE_API_URL}/api/requests/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -81,7 +82,9 @@ export default function MyRequests() {
   const formatRequestDate = (dateValue: any) => {
     if (!dateValue) return "Recently";
     const date = new Date(dateValue);
-    return Number.isNaN(date.getTime()) ? "Recently" : date.toLocaleDateString();
+    return Number.isNaN(date.getTime())
+      ? "Recently"
+      : date.toLocaleDateString();
   };
 
   if (loading) {
@@ -139,8 +142,8 @@ export default function MyRequests() {
                     req.status === "approved"
                       ? "border-green-400/20 bg-green-400/10 text-green-400"
                       : req.status === "rejected"
-                      ? "border-red-400/20 bg-red-400/10 text-red-400"
-                      : "border-yellow-400/20 bg-yellow-400/10 text-yellow-400"
+                        ? "border-red-400/20 bg-red-400/10 text-red-400"
+                        : "border-yellow-400/20 bg-yellow-400/10 text-yellow-400",
                   )}
                 >
                   {getStatusIcon(req.status)}

@@ -30,7 +30,7 @@ export default function MyListings() {
   const fetchPets = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/pets?ownerEmail=${encodeURIComponent(
+        `${(import.meta as any).env.VITE_API_URL}/api/pets?ownerEmail=${encodeURIComponent(
           user?.email || "",
         )}`,
         { credentials: "include" },
@@ -49,10 +49,14 @@ export default function MyListings() {
     if (!confirm("Are you sure you want to delete this listing?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/pets/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${(import.meta as any).env.VITE_API_URL}/api/pets/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+        s,
+      );
 
       if (!res.ok) {
         toast.error("Failed to delete listing");
@@ -71,7 +75,7 @@ export default function MyListings() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/requests?petId=${pet._id}`,
+        `${(import.meta as any).env.VITE_API_URL}/api/requests?petId=${pet._id}`,
         { credentials: "include" },
       );
 
@@ -89,7 +93,7 @@ export default function MyListings() {
   ) => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/requests/${requestId}`,
+        `${(import.meta as any).env.VITE_API_URL}/api/requests/${requestId}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

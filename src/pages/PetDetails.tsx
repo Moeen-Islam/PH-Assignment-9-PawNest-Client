@@ -35,7 +35,9 @@ export default function PetDetails() {
   useEffect(() => {
     const fetchPet = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/pets/${id}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/pets/${id}`,
+        );
 
         if (!res.ok) {
           toast.error("Pet not found");
@@ -76,25 +78,27 @@ export default function PetDetails() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/requests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${(import.meta as any).env.VITE_API_URL}/api/requests`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            petId: pet._id,
+            petName: pet.name,
+            petImageUrl: pet.imageUrl,
+            userName: user.displayName || "User",
+            userEmail: user.email,
+            ownerEmail: pet.ownerEmail,
+            pickupDate: formData.pickupDate,
+            message: formData.message,
+            status: "pending",
+          }),
         },
-        credentials: "include",
-        body: JSON.stringify({
-          petId: pet._id,
-          petName: pet.name,
-          petImageUrl: pet.imageUrl,
-          userName: user.displayName || "User",
-          userEmail: user.email,
-          ownerEmail: pet.ownerEmail,
-          pickupDate: formData.pickupDate,
-          message: formData.message,
-          status: "pending",
-        }),
-      });
-
+      );
       const data = await res.json();
 
       if (!res.ok) {
@@ -179,7 +183,11 @@ export default function PetDetails() {
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <InfoCard icon={PawPrint} label="Species" value={pet.species} />
               <InfoCard icon={Activity} label="Breed" value={pet.breed} />
-              <InfoCard icon={Calendar} label="Age" value={`${pet.age} years`} />
+              <InfoCard
+                icon={Calendar}
+                label="Age"
+                value={`${pet.age} years`}
+              />
               <InfoCard icon={User} label="Gender" value={pet.gender} />
               <InfoCard icon={MapPin} label="Location" value={pet.location} />
               <InfoCard

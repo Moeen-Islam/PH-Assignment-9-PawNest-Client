@@ -41,7 +41,7 @@ export default function AddPet() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/pets", {
+      const res = await fetch(`${(import.meta as any).env.VITE_API_URL}/api/pets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default function AddPet() {
           age: Number(formData.age),
           adoptionFee: Number(formData.adoptionFee),
           ownerEmail: user.email,
-          ownerName: user.name || user.displayName || user.email,
+          ownerName:  user.email || user.displayName || "Anonymous",
           ownerPhoto: user.photoURL || "",
           status: "available",
         }),
@@ -109,11 +109,21 @@ export default function AddPet() {
               }
               className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none text-white appearance-none transition-colors focus:border-brand"
             >
-              <option className="bg-card-dark text-white" value="Dog">Dog</option>
-              <option className="bg-card-dark text-white" value="Cat">Cat</option>
-              <option className="bg-card-dark text-white" value="Bird">Bird</option>
-              <option className="bg-card-dark text-white" value="Rabbit">Rabbit</option>
-              <option className="bg-card-dark text-white" value="Other">Other</option>
+              <option className="bg-card-dark text-white" value="Dog">
+                Dog
+              </option>
+              <option className="bg-card-dark text-white" value="Cat">
+                Cat
+              </option>
+              <option className="bg-card-dark text-white" value="Bird">
+                Bird
+              </option>
+              <option className="bg-card-dark text-white" value="Rabbit">
+                Rabbit
+              </option>
+              <option className="bg-card-dark text-white" value="Other">
+                Other
+              </option>
             </select>
           </div>
 
@@ -160,8 +170,12 @@ export default function AddPet() {
                 }
                 className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-sm outline-none text-white appearance-none transition-colors focus:border-brand"
               >
-                <option className="bg-card-dark text-white" value="Male">Male</option>
-                <option className="bg-card-dark text-white" value="Female">Female</option>
+                <option className="bg-card-dark text-white" value="Male">
+                  Male
+                </option>
+                <option className="bg-card-dark text-white" value="Female">
+                  Female
+                </option>
               </select>
             </div>
           </div>
