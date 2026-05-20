@@ -6,14 +6,12 @@ import {
   Edit3,
   Trash2,
   Users,
-  X,
   Check,
   Activity,
   Heart,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAuth } from "@/src/contexts/AuthContext";
-import { cn } from "@/src/lib/utils";
 
 export default function MyListings() {
   const { user } = useAuth();
@@ -54,8 +52,7 @@ export default function MyListings() {
         {
           method: "DELETE",
           credentials: "include",
-        },
-        s,
+        }
       );
 
       if (!res.ok) {
@@ -124,14 +121,14 @@ export default function MyListings() {
     adopted: pets.filter((p) => p.status === "adopted").length,
   };
 
-  if (loading) return <div className="text-slate-400">Loading...</div>;
+  if (loading) return <div className="text-slate-400 p-6">Loading...</div>;
 
   return (
     <div className="space-y-10">
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
         <div className="flex items-center gap-3">
           <ListChecks className="h-8 w-8 text-brand" />
-          <h1 className="font-display text-3xl font-bold">My Listings</h1>
+          <h1 className="font-display text-3xl font-bold text-white">My Listings</h1>
         </div>
 
         <div className="flex flex-wrap gap-4">
@@ -209,7 +206,7 @@ export default function MyListings() {
                     onClick={() => deletePet(pet._id)}
                     className="flex items-center justify-center gap-2 rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-xs font-bold text-red-400 hover:bg-red-500/20"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4" /> Delete
                   </button>
                 </div>
               </div>
@@ -231,15 +228,14 @@ export default function MyListings() {
 
       {showRequestsModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/10 bg-card-dark p-6 md:p-8">
-            {/* Header */}
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/10 bg-[#0B1324] p-6 md:p-8">
             <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
               <h2 className="text-2xl font-bold text-white">
                 Requests for {selectedPet?.name}
               </h2>
               <button
                 onClick={() => setShowRequestsModal(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-white text-xl"
               >
                 ✕
               </button>
@@ -274,13 +270,12 @@ export default function MyListings() {
 
                     <div className="flex flex-col items-end gap-2 mt-4 md:mt-0">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold uppercase flex items-center gap-1 ${
-                          req.status === "approved"
-                            ? "bg-green-500/10 text-green-500"
-                            : req.status === "rejected"
-                              ? "bg-red-500/10 text-red-500"
-                              : "bg-yellow-400/10 text-yellow-400"
-                        }`}
+                        className={cn(
+                          "px-3 py-1 rounded-full text-xs font-bold uppercase flex items-center gap-1",
+                          req.status === "approved" && "bg-green-500/10 text-green-500",
+                          req.status === "rejected" && "bg-red-500/10 text-red-500",
+                          req.status === "pending" && "bg-yellow-400/10 text-yellow-400"
+                        )}
                       >
                         {req.status}
                       </span>
