@@ -1,4 +1,17 @@
-import { Heart, Lightbulb, Quote, ShieldCheck, Stethoscope, Users } from "lucide-react";
+import {
+  Heart,
+  Lightbulb,
+  Quote,
+  ShieldCheck,
+  Stethoscope,
+  Users,
+  ClipboardCheck,
+  Home,
+  HandHeart,
+  BadgeCheck,
+  Gift,
+  Truck,
+} from "lucide-react";
 
 export default function HomeStaticSections() {
   const successStories = [
@@ -52,8 +65,55 @@ export default function HomeStaticSections() {
     },
   ];
 
+  const adoptionProcess = [
+    {
+      title: "Browse pets",
+      text: "Explore available pets by species, age, location, and adoption status.",
+      icon: ClipboardCheck,
+    },
+    {
+      title: "Send request",
+      text: "Choose your favorite pet and submit an adoption request with pickup details.",
+      icon: HandHeart,
+    },
+    {
+      title: "Owner approval",
+      text: "The pet owner or shelter reviews your request and approves the best match.",
+      icon: BadgeCheck,
+    },
+    {
+      title: "Bring pet home",
+      text: "After approval, arrange pickup and welcome your new companion home.",
+      icon: Home,
+    },
+  ];
+
+  const shelterSupport = [
+    {
+      title: "Verified listings",
+      text: "Owners can manage pet listings with clear details, health status, and vaccination information.",
+      icon: BadgeCheck,
+    },
+    {
+      title: "Request control",
+      text: "Shelters can approve one request, reject others, and mark pets as adopted.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Community help",
+      text: "Every adoption supports shelters by reducing overcrowding and helping pets find care faster.",
+      icon: Gift,
+    },
+    {
+      title: "Easy pickup planning",
+      text: "Pickup dates and messages help owners and adopters communicate clearly.",
+      icon: Truck,
+    },
+  ];
+
   return (
     <div className="space-y-20">
+      {/* Success Stories */}
       <section id="success-stories" className="scroll-mt-24 mx-auto max-w-7xl px-6">
         <div className="mb-10 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">
@@ -66,7 +126,10 @@ export default function HomeStaticSections() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {successStories.map((story) => (
-            <div key={story.name} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+            <div
+              key={story.name}
+              className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
+            >
               <Quote className="mb-5 h-8 w-8 text-orange-500" />
               <h3 className="text-xl font-semibold text-white">{story.name}</h3>
               <p className="mt-3 leading-7 text-slate-400">{story.text}</p>
@@ -75,7 +138,11 @@ export default function HomeStaticSections() {
         </div>
       </section>
 
-      <section id="pet-care-tips" className="scroll-mt-24 border-y border-white/10 bg-white/[0.03] py-16">
+      {/* Pet Care Tips */}
+      <section
+        id="pet-care-tips"
+        className="scroll-mt-24 border-y border-white/10 bg-white/[0.03] py-16"
+      >
         <div className="mx-auto max-w-7xl px-6">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">
             Pet Care Tips
@@ -88,7 +155,10 @@ export default function HomeStaticSections() {
             {careTips.map((tip) => {
               const Icon = tip.icon;
               return (
-                <div key={tip.title} className="rounded-3xl border border-white/10 bg-[#0B1020] p-6">
+                <div
+                  key={tip.title}
+                  className="rounded-3xl border border-white/10 bg-[#0B1020] p-6"
+                >
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-400">
                     <Icon className="h-6 w-6" />
                   </div>
@@ -101,7 +171,8 @@ export default function HomeStaticSections() {
         </div>
       </section>
 
-      <section id="why-adopt" className="scroll-mt-24 mx-auto max-w-7xl px-6 pb-16">
+      {/* Why Adopt */}
+      <section id="why-adopt" className="scroll-mt-24 mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">
@@ -119,7 +190,10 @@ export default function HomeStaticSections() {
             {whyAdopt.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="flex gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+                <div
+                  key={item.title}
+                  className="flex gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6"
+                >
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-500 text-white">
                     <Icon className="h-6 w-6" />
                   </div>
@@ -131,6 +205,86 @@ export default function HomeStaticSections() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Adoption Process */}
+      <section
+        id="adoption-process"
+        className="scroll-mt-24 border-y border-white/10 bg-white/[0.03] py-16"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">
+              Adoption Process
+            </p>
+            <h2 className="mt-3 text-3xl font-bold text-white md:text-4xl">
+              How adoption works on PetNest
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-400">
+              A simple step-by-step process helps adopters and pet owners manage
+              requests clearly and safely.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {adoptionProcess.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <div
+                  key={step.title}
+                  className="relative rounded-3xl border border-white/10 bg-[#0B1020] p-6"
+                >
+                  <div className="mb-5 flex items-center justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-400">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <span className="text-4xl font-black text-white/10">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white">{step.title}</h3>
+                  <p className="mt-3 leading-7 text-slate-400">{step.text}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Shelter Support */}
+      <section id="shelter-support" className="scroll-mt-24 mx-auto max-w-7xl px-6 pb-16">
+        <div className="mb-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">
+            Shelter Support
+          </p>
+          <h2 className="mt-3 text-3xl font-bold text-white md:text-4xl">
+            Built for pet owners and shelters
+          </h2>
+          <p className="mt-4 max-w-3xl leading-7 text-slate-400">
+            PetNest helps owners and shelters manage listings, track adoption
+            requests, and keep the adoption process organized.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {shelterSupport.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                className="flex gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6"
+              >
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-400">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white">{item.title}</h3>
+                  <p className="mt-2 leading-7 text-slate-400">{item.text}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
     </div>
