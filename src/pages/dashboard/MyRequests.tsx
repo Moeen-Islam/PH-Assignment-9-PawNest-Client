@@ -27,7 +27,7 @@ export default function MyRequests() {
   const fetchRequests = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/requests?email=${user?.email}`,
+        `${import.meta.env.VITE_API_URL}/api/requests?email=${user?.email}`,
         { credentials: "include" }
       );
 

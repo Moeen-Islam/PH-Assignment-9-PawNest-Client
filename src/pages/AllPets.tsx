@@ -39,7 +39,8 @@ export default function AllPets() {
       params.append("sortOrder", sortOrder);
 
       const res = await fetch(
-        `http://localhost:5000/api/pets?${params.toString()}`,
+        `${import.meta.env.VITE_API_URL}/api/pets?${params.toString()}`,
+        { credentials: "include" },
       );
 
       if (!res.ok) {

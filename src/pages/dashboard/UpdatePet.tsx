@@ -39,7 +39,7 @@ export default function UpdatePet() {
       if (!id || !user?.email) return;
 
       try {
-        const res = await fetch(`http://localhost:5000/api/pets/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/pets/${id}`, {
           credentials: "include",
         });
 

@@ -30,7 +30,7 @@ export default function MyListings() {
   const fetchPets = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/pets?ownerEmail=${encodeURIComponent(
+        `${import.meta.env.VITE_API_URL}/api/pets?ownerEmail=${encodeURIComponent(
           user?.email || "",
         )}`,
         { credentials: "include" },

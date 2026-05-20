@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/pets?limit=6");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/pets?limit=6`, { credentials: "include" });
 
         if (!res.ok) {
           throw new Error("Failed to fetch featured pets");
