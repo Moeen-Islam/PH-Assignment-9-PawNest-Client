@@ -5,6 +5,7 @@ import { useTheme } from "@/src/contexts/ThemeContext";
 import { PawPrint, LogIn, LogOut, Sun, Moon, Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/src/lib/utils";
+import Footer from "../components/Footer";
 
 export default function MainLayout() {
   const { user, logout, loginWithGoogle } = useAuth();
@@ -122,27 +123,7 @@ export default function MainLayout() {
         <Outlet />
       </main>
 
-      <footer className="bg-inherit border-t border-white/10 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-2">
-              <PawPrint className="w-6 h-6 text-brand" />
-              <span className="font-display font-bold text-xl tracking-tight">PawNest</span>
-            </div>
-            <div className="flex gap-8 text-sm text-gray-500">
-              <a href="#" className="hover:text-brand">Facebook</a>
-              <a href="#" className="hover:text-brand">Instagram</a>
-              <a href="#" className="hover:text-brand">X (Twitter)</a>
-            </div>
-            <div className="text-sm text-gray-500">
-              © 2026 PawNest Adoption. Every pet deserves a safe home.
-            </div>
-          </div>
-          <div className="mt-8 text-center text-xs text-gray-600">
-            Contact: hello@pawnest.org | 123 Pet Lane, Animal City
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
