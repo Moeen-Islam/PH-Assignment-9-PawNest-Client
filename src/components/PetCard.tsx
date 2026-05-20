@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Calendar, Activity } from "lucide-react";
 import { motion } from "motion/react";
-import { cn } from "@/src/lib/utils";
 
 interface PetCardProps {
   pet: any;
@@ -10,6 +9,9 @@ interface PetCardProps {
 }
 
 const PetCard: React.FC<PetCardProps> = ({ pet, onQuickView }) => {
+  // Safe extraction of MongoDB object unique identification references
+  const petIdentifier = pet._id || pet.id;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -48,7 +50,7 @@ const PetCard: React.FC<PetCardProps> = ({ pet, onQuickView }) => {
             {pet.name}
           </h3>
           <span className="text-brand font-bold text-lg leading-none">
-            ${pet.adoptionFee}
+            ৳{pet.adoptionFee}
           </span>
         </div>
 
@@ -83,8 +85,8 @@ const PetCard: React.FC<PetCardProps> = ({ pet, onQuickView }) => {
             </button>
           ) : (
             <Link
-              to={`/pets/${pet.id}`}
-              className="flex-grow py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-center hover:bg-white/10 transition-all"
+              to={`/pets/${petIdentifier}`}
+              className="flex-grow py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-center hover:bg-white/10 transition-all text-slate-300"
             >
               View Details
             </Link>
@@ -92,7 +94,7 @@ const PetCard: React.FC<PetCardProps> = ({ pet, onQuickView }) => {
 
           {pet.status !== "adopted" && (
             <Link
-              to={`/pets/${pet.id}`}
+              to={`/pets/${petIdentifier}`}
               className="flex-grow py-3 px-4 rounded-xl bg-brand text-white text-xs font-bold text-center hover:bg-brand-hover shadow-lg shadow-brand/20 transition-all"
             >
               Adopt Now
